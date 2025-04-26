@@ -5,12 +5,11 @@ To write a C program to find and display the priority of the operator in the giv
 
 ## Algorithm
 1. Start
-2. Initialize empty stack s and top.
-3. Define push() and pop() functions.
-4. In evalprefix(), scan expression right to left.
-5. If digit → convert and push to stack.
-6. If operator (+, *) → pop two values, apply operator, push result.
-7. After loop, print top of stack.
+2. Define the priority() function to return the priority of operators.
+3. Initialize the string containing operators and operands.
+4. Loop through each character in the string.
+5. For each operator, call the priority() function to determine its priority.
+6. Print the operator and its corresponding priority level.
 8. End
 
 ## Program:
@@ -21,54 +20,66 @@ Developed by : Aliya Sheema
 RegisterNumber:  212223230011
 */
 
-#include<stdio.h>
+#include <stdio.h>
 #include<string.h>
-#include<ctype.h>
-int s[50];
-int top=0;
-void push(int ch)
+int priority(char x)
 {
-top++;
-s[top]=ch;
+if(x == '&' || x == '|')
+return 1;
+if(x == '+' || x == '-')
+return 2;
+if(x == '*' || x == '/' || x == '%')
+return 3;
+if(x == '^')
+return 4;
+return 0;
 }
-int pop()
+int main()
 {
-int ch;
-ch=s[top];
-top=top-1;
-return(ch);
-}
-void evalprefix(char p[50])
+int i,j;
+char ch[100]="(A*B)^C+(D%H)/F&G";
+for(i=0;i<strlen(ch);i++)
 {
-int a,b,c,i;
-for(i=strlen(p)-1;i>=0;i--)
+if(ch[i]=='+'||
+ch[i]=='-'||
+ch[i]=='*'||
+ch[i]=='/'||
+ch[i]=='%'||
+ch[i]=='^'||
+ch[i]=='&'||
+ch[i]=='|')
 {
-if(p[i]=='+')
+j=priority(ch[i]);
+switch(j)
 {
-a=pop();
-b=pop();
-c=a+b;
-push(c);
+case 1:
+printf("%c ---- > ",ch[i]);
+printf("Lowest Priority\n");
+break;
+case 2:
+printf("%c ---- > ",ch[i]);
+printf("Second Lowest Priority\n");
+break;
+case 3:
+printf("%c ---- > ",ch[i]);
+printf("Second Highest Priority\n");
+break;
+case 4:
+printf("%c ---- > ",ch[i]);
+printf("Highest Priority\n");
+break;
 }
-else if(p[i]=='*')
-{
-a=pop();
-b=pop();
-c=a*b;
-push(c);
-}
-else
-{
-push(p[i]-48);
 }
 }
-printf("%d",pop());
+return 0;
 }
+
 ```
 
 ## Output:
 
-![image](https://github.com/user-attachments/assets/656681b5-cb2d-4ac3-b9d5-33d984ba704c)
+![image](https://github.com/user-attachments/assets/53797a4e-b8be-4092-923f-968111825e92)
+
 
 
 ## Result:
